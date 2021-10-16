@@ -25,6 +25,13 @@ public class Departement implements Serializable {
 	
 	private String name;
 	
+	
+	public Departement(int id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 	//@JsonManagedReference 
 	@JsonIgnore
 	@ManyToMany
