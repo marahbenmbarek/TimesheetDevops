@@ -36,7 +36,7 @@ public class EmployeTest {
     public void ajoutEmploye() {
         Employe employe = new Employe();
         employe.setNom("ahmed");
-        employe.setPrenom("bouallagui");
+        employe.setPrenom("labes");
         employe.setEmail("ahmed@esprit.tn");
         employe.setRole(Role.CHEF_DEPARTEMENT);
         employe.setActif(true);
