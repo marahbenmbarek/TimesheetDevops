@@ -3,12 +3,8 @@ package tn.esprit.spring.controller;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.validation.constraints.Pattern;
 
-import org.ocpsoft.rewrite.annotation.Join;
-import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -24,8 +20,6 @@ import tn.esprit.spring.services.IEmployeService;
 
 @Scope(value = "session")
 @Controller(value = "employeController")
-@ELBeanName(value = "employeController")
-@Join(path = "/", to = "/login.jsf")
 public class ControllerEmployeImpl  {
 
 	@Autowired
@@ -60,16 +54,14 @@ public class ControllerEmployeImpl  {
 		else
 		{
 			
-			FacesMessage facesMessage =
-					new FacesMessage("Login Failed: Please check your username/password and try again.");
-			FacesContext.getCurrentInstance().addMessage("form:btn",facesMessage);
+			System.out.print("00");
 		}
 		return navigateTo;	
 	}
 
 	public String doLogout()
 	{
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		
 	
 	return "/login.xhtml?faces-redirect=true";
 	}
