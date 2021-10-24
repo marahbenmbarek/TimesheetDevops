@@ -50,8 +50,11 @@ public class Departement implements Serializable {
 	public Departement(String name) {
 		this.name = name;
 	}
-	
-	public int getId() {
+
+    public Departement(String test, Entreprise entreprise) {
+    }
+
+    public int getId() {
 		return id;
 	}
 
