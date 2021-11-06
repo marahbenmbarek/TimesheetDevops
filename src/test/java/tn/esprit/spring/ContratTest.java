@@ -1,20 +1,23 @@
 package tn.esprit.spring;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import tn.esprit.spring.entities.Contrat;
 import tn.esprit.spring.repository.ContratRepository;
 import tn.esprit.spring.services.IContratService;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -34,23 +37,16 @@ public class ContratTest {
     @Mock
     private ContratRepository contratRepository;
 
-    @Test
-    public void getAllContracts() {
-        Mockito.when(contratRepository.findAll()).thenReturn(new ArrayList());
-        List<Contrat> contrats = contratService.getAllContrats();
-        Assert.assertEquals(contrats.isEmpty(), contrats.isEmpty());
-        long start = System.currentTimeMillis();
-        long elapsedTime = System.currentTimeMillis() - start;
-        logger.info("Method execution time: " + elapsedTime + " milliseconds.");
-        logger.info("contrats list is here");
-    }
-
+    
     @Test
     public void testAddContrat() throws ParseException {
+    	logger.info("In testAddContrat() : ");
+    	logger.debug("adding contract is starting .");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = dateFormat.parse("2020-10-30");
-        Contrat contrat = new Contrat(1,date,"yosr", 500);
+        Contrat contrat = new Contrat(1,date,"hazem", 500);
         int ContratAdded = contratService.ajouterContrat(contrat);
+        assertEquals(contrat.getReference(), ContratAdded);
         long start = System.currentTimeMillis();
         long elapsedTime = System.currentTimeMillis() - start;
         logger.info("Method execution time: " + elapsedTime + " milliseconds.");
@@ -59,7 +55,10 @@ public class ContratTest {
 
     @Test
     public void testRetrieveAllContrat() {
+    	logger.info("In testRetrieveAllContrat() : ");
+    	logger.debug("getting all contracts is starting .");
         List<Contrat> listEmployes = contratService.getAllContrats();
+        assertEquals(false, listEmployes.isEmpty());
         long start = System.currentTimeMillis();
         long elapsedTime = System.currentTimeMillis() - start;
         logger.info("Method execution time: " + elapsedTime + " milliseconds.");
@@ -67,28 +66,34 @@ public class ContratTest {
     }
 
     @Test
-    public void getContratById() throws ParseException {
+    public void testGetContratById() throws ParseException {
+    	logger.info("In testGetContratById() : ");
+    	logger.debug("getting contract by Id is starting .");
         try{
-            Contrat Contratretrieved = contratService.getContratById(1);
+            Contrat contratretrieved = contratService.getContratById(1);
+            assertNotNull(contratretrieved);
             long start = System.currentTimeMillis();
             long elapsedTime = System.currentTimeMillis() - start;
             logger.info("Method execution time: " + elapsedTime + " milliseconds.");
             logger.info("Contrat By Id list is here");
         }catch(Exception e){
-            System.out.println("get contrat with reference 2 not founded");
+            logger.error("somthing went wrong or this contrat don't exist");;
         }
     }
 
     @Test
-    public void deleteContratById() throws ParseException {
+    public void testDeleteContratById() throws ParseException {
+    	logger.info("In testDeleteContratById() : ");
+    	logger.debug("deleting contract by Id is starting .");
         try {
             contratService.deleteById(1);
+            assertNull(contratRepository.findById(1));
             long start = System.currentTimeMillis();
             long elapsedTime = System.currentTimeMillis() - start;
             logger.info("Method execution time: " + elapsedTime + " milliseconds.");
             logger.info("get Contrat By Id list is here");
         } catch (Exception e) {
-            System.out.println("contrat with reference 2 not founded");
+        	 logger.error("contrat with reference 1 not founded");
         }
     }
 }
