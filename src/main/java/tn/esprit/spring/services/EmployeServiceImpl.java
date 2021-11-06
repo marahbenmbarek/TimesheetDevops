@@ -37,6 +37,9 @@ public class EmployeServiceImpl implements IEmployeService {
 			return employeRepository.getEmployeByEmailAndPassword(login, password);
 				
 	}
+	public void ajouterEmploye(Employe employe) {
+		employeRepository.save(employe);
+	}
 
 	@Override
 	public int addOrUpdateEmploye(Employe employe) {
@@ -47,6 +50,7 @@ public class EmployeServiceImpl implements IEmployeService {
 
 	public void mettreAjourEmailByEmployeId(String email, int employeId) {
 		Employe employe = employeRepository.findById(employeId).get();
+		
 		employe.setEmail(email);
 		employeRepository.save(employe);
 
@@ -67,7 +71,7 @@ public class EmployeServiceImpl implements IEmployeService {
 			depManagedEntity.getEmployes().add(employeManagedEntity);
 		}
 
-		// à ajouter? 
+	
 		deptRepoistory.save(depManagedEntity); 
 
 	}
@@ -80,12 +84,12 @@ public class EmployeServiceImpl implements IEmployeService {
 		for(int index = 0; index < employeNb; index++){
 			if(dep.getEmployes().get(index).getId() == employeId){
 				dep.getEmployes().remove(index);
-				break;//a revoir
+				break;
 			}
 		}
 	} 
 	
-	// Tablesapce (espace disque) 
+	
 
 	public int ajouterContrat(Contrat contrat) {
 		contratRepoistory.save(contrat);
@@ -110,9 +114,7 @@ public class EmployeServiceImpl implements IEmployeService {
 	{
 		Employe employe = employeRepository.findById(employeId).get();
 
-		//Desaffecter l'employe de tous les departements
-		//c'est le bout master qui permet de mettre a jour
-		//la table d'association
+		
 		for(Departement dep : employe.getDepartements()){
 			dep.getEmployes().remove(employe);
 		}
