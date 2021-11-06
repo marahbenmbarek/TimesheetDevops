@@ -86,8 +86,12 @@ public class ContratTest {
     	logger.info("In testDeleteContratById() : ");
     	logger.debug("deleting contract by Id is starting .");
         try {
-            contratService.deleteById(1);
-            assertNull(contratRepository.findById(1));
+       	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dateFormat.parse("2020-10-30");
+            Contrat contrat = new Contrat(date,"hazem", 500);
+            int ContratAdded = contratService.ajouterContrat(contrat);
+            contratService.deleteById(ContratAdded);
+            assertNull(contratRepository.findById(ContratAdded));
             long start = System.currentTimeMillis();
             long elapsedTime = System.currentTimeMillis() - start;
             logger.info("Method execution time: " + elapsedTime + " milliseconds.");
