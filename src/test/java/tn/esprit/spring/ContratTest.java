@@ -70,7 +70,11 @@ public class ContratTest {
     	logger.info("In testGetContratById() : ");
     	logger.debug("getting contract by Id is starting .");
         try{
-            Contrat contratretrieved = contratService.getContratById(1);
+        	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dateFormat.parse("2020-10-30");
+            Contrat contrat = new Contrat(date,"hazem", 500);
+            int ContratAdded = contratService.ajouterContrat(contrat);
+            Contrat contratretrieved = contratService.getContratById(ContratAdded);
             assertNotNull(contratretrieved);
             long start = System.currentTimeMillis();
             long elapsedTime = System.currentTimeMillis() - start;
