@@ -31,8 +31,7 @@ public class Departement implements Serializable {
 		this.id = id;
 		this.name = name;
 	}
-
-	//@JsonManagedReference 
+ 
 	@JsonIgnore
 	@ManyToMany
 	private List<Employe> employes;

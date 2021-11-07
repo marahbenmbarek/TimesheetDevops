@@ -16,7 +16,6 @@ public class TimesheetPK implements Serializable {
 	
 	private int idEmploye;
 	
-	//Choisir le TemporalType selon le besoin metier
 	@Temporal(TemporalType.DATE)
 	private Date dateDebut;
 	
